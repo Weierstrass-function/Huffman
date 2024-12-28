@@ -342,7 +342,7 @@ int main()
         lst.sigma(Q - 1);
     }
     else {
-        lst.sigma(rem);
+        lst.sigma(rem-1);
     }
 
     // пока в списке не останется 1 вершина
