@@ -28,6 +28,7 @@ const char* l2 = "01";
 
 // АЛФАВИТЫ ===================================================
 
+unsigned L = 0; // счетчик избыточности
 
 // список для хранения кода
 // кастомный только потому, что сам как-то получился из класса ниже
@@ -66,6 +67,15 @@ public:
         for (CLN* p = head; p != NULL; p = p->next) {
             cout << p->c;
         }
+    }
+
+    unsigned size()
+    {
+        unsigned size = 0;
+        for (CLN* p = head; p != NULL; p = p->next)
+            size++;
+
+        return size;
     }
 };
 
@@ -245,7 +255,8 @@ public:
     void spcl_DFS(treeNode* p, char c = ';')
     {
         if (p) {
-            code.push(c); // добавить к коду
+            if (c != ';')
+                code.push(c); // добавить к коду
             if (p->links[0]) {
                 for (unsigned q = 0; q < Q; q++) {
                     spcl_DFS(p->links[q], l2[q]);
@@ -254,11 +265,16 @@ public:
             else {
                 // лист - вывод кода
                 cout << p->fr << ' ';
-                cout << p->c << " ";
+                cout << p->c << ' ';
                 code.print();
+                cout << code.size() * p->fr;
                 cout << endl;
+
+                // подсчет избыточности
+                L += code.size() * p->fr; // из
             }
-            code.del(); // убрать добавленное
+            if (c != ';')
+                code.del(); // убрать добавленное
         }
     }
 
@@ -294,6 +310,7 @@ int main()
     // СОЗДАНИЕ ЛИСТЬЕВ:
     treeList lst(l1); // создание списка
 
+    unsigned txtSize = 0; // число символов исходного алфавита в исходном тексте
     // определение частот
     for (unsigned i = 0; i < txt.size(); i++) {
         // поиск символа txt[i] в списке
@@ -308,6 +325,8 @@ int main()
         // в списке нет символа txt[i]
         if (nFnd)
             cout << "в исходном алфавите нет символа '" << txt[i] << "'" << endl;
+        else
+            txtSize++;
     }
 
     // собственно магия построения дерева из списка ===========
@@ -335,4 +354,5 @@ int main()
     // ========================================================
 
     lst.spcl_DFS(lst.head->node);
+    cout << float(L) / txtSize << endl;
 }
