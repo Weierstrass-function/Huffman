@@ -253,6 +253,7 @@ public:
             }
             else {
                 // лист - вывод кода
+                cout << p->fr << ' ';
                 cout << p->c << " ";
                 code.print();
                 cout << endl;
