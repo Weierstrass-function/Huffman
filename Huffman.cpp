@@ -23,8 +23,8 @@ const unsigned N = 33; // мощность исходного алфавита
 const char* l1 = "ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ ";
 
 // конечный
-const unsigned Q = 2; // мощность конечного алфавита
-const char* l2 = "01";
+const unsigned Q = 4; // мощность конечного алфавита
+const char* l2 = "0123";
 
 // АЛФАВИТЫ ===================================================
 
@@ -264,14 +264,14 @@ public:
             }
             else {
                 // лист - вывод кода
+                cout.width(2);
                 cout << p->fr << ' ';
                 cout << p->c << ' ';
                 code.print();
-                cout << code.size() * p->fr;
                 cout << endl;
 
                 // подсчет избыточности
-                L += code.size() * p->fr; // из
+                L += code.size() * p->fr;
             }
             if (c != ';')
                 code.del(); // убрать добавленное
